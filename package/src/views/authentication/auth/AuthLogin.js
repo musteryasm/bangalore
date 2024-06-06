@@ -33,25 +33,7 @@ const AuthLogin = ({ title, subtitle, subtext }) => (
                     fontWeight={600} component="label" htmlFor='password' mb="5px" >Password</Typography>
                 <CustomTextField id="password" type="password" variant="outlined" fullWidth />
             </Box>
-            <Stack justifyContent="space-between" direction="row" alignItems="center" my={2}>
-                <FormGroup>
-                    <FormControlLabel
-                        control={<Checkbox defaultChecked />}
-                        label="Remeber this Device"
-                    />
-                </FormGroup>
-                <Typography
-                    component={Link}
-                    to="/"
-                    fontWeight="500"
-                    sx={{
-                        textDecoration: 'none',
-                        color: 'primary.main',
-                    }}
-                >
-                    Forgot Password ?
-                </Typography>
-            </Stack>
+            {subtitle}
         </Stack>
         <Box>
             <Button
@@ -66,7 +48,7 @@ const AuthLogin = ({ title, subtitle, subtext }) => (
                 Sign In
             </Button>
         </Box>
-        {subtitle}
+        
     </>
 );
 

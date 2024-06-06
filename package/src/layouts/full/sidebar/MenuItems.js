@@ -17,20 +17,31 @@ const Menuitems = [
     href: '/dashboard',
   },
   {
-    navlabel: true,
-    subheader: 'Utilities',
+    id:uniqueId(),
+    title:'Resources',
+    icon: IconLayoutDashboard,
+    href: '/sample-page',
   },
+  // {navlabel: true,
+  //   subheader: 'New',
+  // },
   {
     id: uniqueId(),
-    title: 'Typography',
+    title: 'Community',
     icon: IconTypography,
     href: '/ui/typography',
   },
   {
     id: uniqueId(),
-    title: 'Shadow',
+    title: 'KPIs',
     icon: IconCopy,
     href: '/ui/shadow',
+  },
+  {
+    id: uniqueId(),
+    title: 'Demographics',
+    icon: IconCopy,
+    href: 'icons',
   },
   {
     navlabel: true,
@@ -47,22 +58,6 @@ const Menuitems = [
     title: 'Register',
     icon: IconUserPlus,
     href: '/auth/register',
-  },
-  {
-    navlabel: true,
-    subheader: 'Extra',
-  },
-  {
-    id: uniqueId(),
-    title: 'Icons',
-    icon: IconMoodHappy,
-    href: '/icons',
-  },
-  {
-    id: uniqueId(),
-    title: 'Sample Page',
-    icon: IconAperture,
-    href: '/sample-page',
   },
 ];
 

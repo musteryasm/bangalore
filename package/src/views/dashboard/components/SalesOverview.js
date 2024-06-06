@@ -1,28 +1,34 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Select, MenuItem } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import DashboardCard from '../../../components/shared/DashboardCard';
 import Chart from 'react-apexcharts';
 
-
 const SalesOverview = () => {
-
-    // select
-    const [month, setMonth] = React.useState('1');
-
-    const handleChange = (event) => {
-        setMonth(event.target.value);
-    };
-
-    // chart color
+    const [year, setYear] = useState('2023');
     const theme = useTheme();
     const primary = theme.palette.primary.main;
     const secondary = theme.palette.secondary.main;
 
-    // chart
-    const optionscolumnchart = {
+    const handleChange = (event) => {
+        setYear(event.target.value);
+    };
+
+    // Sample dynamic data based on year
+    const data = {
+        '2023': {
+            months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            crimes: [30, 40, 35, 50, 49, 60, 70, 91, 125, 160, 200, 230]
+        },
+        '2024': {
+            months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            crimes: [25, 30, 45, 55, 60, 70, 75, 80, 95, 110, 130, 150]
+        }
+    };
+
+    const options = {
         chart: {
-            type: 'bar',
+            type: 'line',
             fontFamily: "'Plus Jakarta Sans', sans-serif;",
             foreColor: '#adb0bb',
             toolbar: {
@@ -31,23 +37,11 @@ const SalesOverview = () => {
             height: 370,
         },
         colors: [primary, secondary],
-        plotOptions: {
-            bar: {
-                horizontal: false,
-                barHeight: '60%',
-                columnWidth: '42%',
-                borderRadius: [6],
-                borderRadiusApplication: 'end',
-                borderRadiusWhenStacked: 'all',
-            },
-        },
-
         stroke: {
             show: true,
-            width: 5,
-            lineCap: "butt",
-            colors: ["transparent"],
-          },
+            width: 3,
+            curve: 'smooth',
+        },
         dataLabels: {
             enabled: false,
         },
@@ -64,10 +58,16 @@ const SalesOverview = () => {
             },
         },
         yaxis: {
-            tickAmount: 4,
+            tickAmount: 5,
+            title: {
+                text: 'Number of Crimes',
+            },
         },
         xaxis: {
-            categories: ['16/08', '17/08', '18/08', '19/08', '20/08', '21/08', '22/08', '23/08'],
+            categories: data[year].months,
+            title: {
+                text: 'Months',
+            },
             axisBorder: {
                 show: false,
             },
@@ -77,36 +77,32 @@ const SalesOverview = () => {
             fillSeriesColor: false,
         },
     };
-    const seriescolumnchart = [
+
+    const series = [
         {
-            name: 'Eanings this month',
-            data: [355, 390, 300, 350, 390, 180, 355, 390],
-        },
-        {
-            name: 'Expense this month',
-            data: [280, 250, 325, 215, 250, 310, 280, 250],
-        },
+            name: 'Crimes Reported',
+            data: data[year].crimes,
+        }
     ];
 
     return (
-
-        <DashboardCard title="Sales Overview" action={
+        <DashboardCard title="Crimes Reported" action={
             <Select
-                labelId="month-dd"
-                id="month-dd"
-                value={month}
+                labelId="year-dd"
+                id="year-dd"
+                value={year}
                 size="small"
                 onChange={handleChange}
             >
-                <MenuItem value={1}>March 2023</MenuItem>
-                <MenuItem value={2}>April 2023</MenuItem>
-                <MenuItem value={3}>May 2023</MenuItem>
+                <MenuItem value={'2023'}>2023</MenuItem>
+                <MenuItem value={'2024'}>2024</MenuItem>
+                {/* Add more years as needed */}
             </Select>
         }>
             <Chart
-                options={optionscolumnchart}
-                series={seriescolumnchart}
-                type="bar"
+                options={options}
+                series={series}
+                type="line"
                 height="370px"
             />
         </DashboardCard>

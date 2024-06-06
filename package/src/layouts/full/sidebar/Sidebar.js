@@ -7,7 +7,7 @@ const Sidebar = (props) => {
 
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up("lg"));
 
-  const sidebarWidth = '270px';
+  const sidebarWidth = '200px';
 
   if (lgUp) {
     return (
