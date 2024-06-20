@@ -1,51 +1,119 @@
-import React from 'react';
-import { Paper, Box, Grid } from '@mui/material';
+import React, { useState } from 'react';
+import { Card, CardContent, Box, Grid, Typography, Button, ButtonGroup } from '@mui/material';
 import PageContainer from 'src/components/container/PageContainer';
-import DashboardCard from '../../components/shared/DashboardCard';
-import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
+import Officers from './components/Officers';  // Adjust the import paths as necessary
+import Units from './components/Units';
+import Locations from './components/Location';
+import Performance from './components/Performance';
+import Crime from './components/Crime';
+import Joyride from 'react-joyride';
 
-const Item = styled(Paper)(({ theme }) => ({
-  ...theme.typography.body1,
-  textAlign: 'center',
-  color: theme.palette.text.secondary,
-  height: 60,
-  lineHeight: '60px',
-}));
+const SamplePage = () => {
+  const [selectedToggle, setSelectedToggle] = useState('Officers');
+  const [runTour, setRunTour] = useState(false);
 
-const darkTheme = createTheme({ palette: { mode: 'dark' } });
-const lightTheme = createTheme({ palette: { mode: 'light' } });
+  const handleToggleChange = (toggle) => {
+    setSelectedToggle(toggle);
+  };
 
-const Shadow = () => {
+  const renderComponent = () => {
+    switch (selectedToggle) {
+      case 'Resources':
+        return <Officers />;
+      case 'Locations':
+        return <Locations />;
+      case 'Performance':
+        return <Performance />;
+      case 'Crime':
+        return <Crime />;
+      default:
+        return <Typography variant="body1">Please select an option.</Typography>;
+    }
+  };
+
+  const steps = [
+    {
+      target: '.tour-dashboard',
+      content: 'This is the dashboard where you can see the overall performance.',
+    },
+    {
+      target: '.tour-button-group',
+      content: 'Use these buttons to toggle between different sections.',
+    },
+    {
+      target: '.tour-resources',
+      content: 'This section shows the unit and personnel performance.',
+    },
+    {
+      target: '.tour-locations',
+      content: 'This section shows most vulnerable locations and their statistics.',
+    },
+    {
+      target: '.tour-performance',
+      content: 'This section shows the performance metrics.',
+    },
+    {
+      target: '.tour-crime',
+      content: 'This section shows the crime statistics.',
+    },
+  ];
+
   return (
-    <PageContainer title="Shadow" description="this is Shadow">
-
-      <DashboardCard title="Shadow">
-        <Grid container spacing={2}>
-          {[lightTheme, darkTheme].map((theme, index) => (
-            <Grid item xs={6} key={index}>
-              <ThemeProvider theme={theme}>
-                <Box
-                  sx={{
-                    p: 2,
-                    bgcolor: 'background.default',
-                    display: 'grid',
-                    gridTemplateColumns: { md: '1fr 1fr' },
-                    gap: 2,
-                  }}
-                >
-                  {[0, 1, 2, 3, 4, 6, 8, 12, 16, 24].map((elevation) => (
-                    <Item key={elevation} elevation={elevation}>
-                      {`elevation=${elevation}`}
-                    </Item>
+    <PageContainer title="Key Performance Indicators" description="Statistics">
+      <Joyride
+        steps={steps}
+        run={runTour}
+        continuous
+        showSkipButton
+        showProgress
+        styles={{
+          options: {
+            zIndex: 10000,
+          },
+        }}
+      />
+      <Grid container spacing={3} justifyContent="center">
+        <Grid item xs={22} md={25}>
+          <Card
+            className="tour-dashboard"
+            sx={{
+              boxShadow: 3,
+              borderRadius: 2,
+              padding: 4,
+            }}
+          >
+            <CardContent>
+              <Typography variant="h4" gutterBottom>
+                Dashboard
+              </Typography>
+              <Box display="flex" justifyContent="center" mb={3}>
+                <ButtonGroup className="tour-button-group" variant="contained" aria-label="outlined primary button group">
+                  {['Resources', 'Locations', 'Performance', 'Crime'].map((toggle) => (
+                    <Button
+                      key={toggle}
+                      className={`tour-${toggle.toLowerCase()}`}
+                      color={selectedToggle === toggle ? 'primary' : 'secondary'}
+                      onClick={() => handleToggleChange(toggle)}
+                    >
+                      {toggle}
+                    </Button>
                   ))}
-                </Box>
-              </ThemeProvider>
-            </Grid>
-          ))}
+                </ButtonGroup>
+              </Box>
+              <Box mt={12}>
+                {renderComponent()}
+              </Box>
+            </CardContent>
+          </Card>
         </Grid>
-      </DashboardCard>
+      </Grid>
+      <Box display="flex" justifyContent="center" mt={4}>
+        <Button variant="contained" color="primary" onClick={() => setRunTour(true)}>
+          Start Tour
+        </Button>
+      </Box>
     </PageContainer>
   );
 };
 
-export default Shadow;
+export default SamplePage;

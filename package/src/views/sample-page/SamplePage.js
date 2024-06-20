@@ -1,20 +1,21 @@
 import React, { useState } from 'react';
-import { Grid, Typography, Box, Card, CardContent, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from '@mui/material';
+import { Grid, Typography, Box, Card, CardContent, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField, Table, TableHead, TableBody, TableRow, TableCell } from '@mui/material';
 import PageContainer from 'src/components/container/PageContainer';
 import SalesOverview from '../dashboard/components/SalesOverview';
+import Joyride from 'react-joyride';
 
 const cardContents = [
-  { title: 'Card 1', text: 'This is the content of card 1' },
-  { title: 'Card 2', text: 'This is the content of card 2' },
-  { title: 'Card 3', text: 'This is the content of card 3' },
-  { title: 'Card 4', text: 'This is the content of card 4' },
-  { title: 'Card 5', text: 'This is the content of card 5' },
-  { title: 'Card 6', text: 'This is the content of card 6' },
-  { title: 'Card 7', text: 'This is the content of card 7' },
-  { title: 'Card 8', text: 'This is the content of card 8' },
+  { title: 'Complaints Received', text: '100000' },
+  { title: 'Issues Resolved', text: '15000' },
+  { title: 'Issues Unsolved', text: '25000' },
+  { title: 'Feedbacks Recieved', text: '100000' },
+  // { title: 'Card 5', text: 'This is the content of card 5' },
+  // { title: 'Card 6', text: 'This is the content of card 6' },
+  // { title: 'Card 7', text: 'This is the content of card 7' },
+  // { title: 'Card 8', text: 'This is the content of card 8' },
 ];
 
-const emptyCardHeight = 230; // Set the height to match the expected height of the YearlyBreakup and MonthlyEarnings components
+const emptyCardHeight = 330; // Set the height to match the expected height of the YearlyBreakup and MonthlyEarnings components
 
 const SamplePage = () => {
   const [open, setOpen] = useState(false);
@@ -23,6 +24,7 @@ const SamplePage = () => {
   const [alertDateFrom, setAlertDateFrom] = useState('');
   const [alertDateTo, setAlertDateTo] = useState('');
   const [alerts, setAlerts] = useState([]);
+  const [runTour, setRunTour] = useState(false);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -36,9 +38,71 @@ const SamplePage = () => {
     handleClose();
   };
 
+  const steps = [
+    {
+      target: '.tour-cards',
+      content: 'These are the main cards for providing information.',
+    },
+    {
+      target: '.tour-sales-overview',
+      content: 'This section shows the trend of complaints received.',
+    },
+    {
+      target: '.tour-reports-statistics',
+      content: 'This table displays the statistics of the complaints.',
+    },
+    {
+      target: '.tour-alerts',
+      content: 'This section is for managing alerts.',
+    },
+    {
+      target: '.tour-posts',
+      content: 'These are the recent community posts.',
+    },
+    {
+      target: '.tour-add-alert-button',
+      content: 'Click here to add a new alert.',
+    },
+  ];
+
+  // Sample posts data
+  const posts = [
+    { id: 1, title: 'Post 1', content: 'Content of post 1' },
+    { id: 2, title: 'Post 2', content: 'Content of post 2' },
+    { id: 3, title: 'Post 3', content: 'Content of post 3' },
+    { id: 4, title: 'Post 4', content: 'Content of post 4' },
+    { id: 5, title: 'Post 5', content: 'Content of post 5' },
+    { id: 6, title: 'Post 6', content: 'Content of post 6' },
+    { id: 7, title: 'Post 7', content: 'Content of post 7' },
+    { id: 8, title: 'Post 8', content: 'Content of post 8' },
+    { id: 9, title: 'Post 9', content: 'Content of post 9' },
+    { id: 10, title: 'Post 10', content: 'Content of post 10' },
+  ];
+
+  // Sample crime data for empty cards
+  const crimeData = [
+    { district: 'District A', crime: 'Burglary', count: 150 },
+    { district: 'District B', crime: 'Assault', count: 100 },
+    { district: 'District A', crime: 'Robbery', count: 80 },
+    { district: 'District C', crime: 'Vandalism', count: 50 },
+    { district: 'District B', crime: 'Fraud', count: 30 },
+  ];
+
   return (
     <PageContainer title="Sample Page" description="This is a sample page">
-      <Box mb={4}>
+      <Joyride
+        steps={steps}
+        run={runTour}
+        continuous
+        showSkipButton
+        showProgress
+        styles={{
+          options: {
+            zIndex: 10000,
+          },
+        }}
+      />
+      <Box mb={4} className="tour-cards">
         <Grid container spacing={3}>
           {cardContents.map((content, index) => (
             <Grid item xs={12} sm={6} md={3} key={index}>
@@ -63,12 +127,12 @@ const SamplePage = () => {
       </Box>
       <Box>
         <Grid container spacing={3}>
-          <Grid item xs={12} lg={8}>
+          <Grid item xs={12} lg={8} className="tour-sales-overview">
             <SalesOverview />
           </Grid>
           <Grid item xs={12} lg={4}>
             <Grid container spacing={3}>
-              <Grid item xs={12}>
+              <Grid item xs={12} className="tour-reports-statistics">
                 <Card
                   sx={{
                     boxShadow: 3,
@@ -78,24 +142,47 @@ const SamplePage = () => {
                 >
                   <CardContent>
                     <Typography variant="h6" gutterBottom>
-                      Empty Card
+                      Reports Statistics
                     </Typography>
+                    <Table>
+                      <TableHead>
+                        <TableRow>
+                          <TableCell>District</TableCell>
+                          <TableCell>Crime Type</TableCell>
+                          <TableCell>Count</TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {crimeData.map((crime, index) => (
+                          <TableRow key={index}>
+                            <TableCell>{crime.district}</TableCell>
+                            <TableCell>{crime.crime}</TableCell>
+                            <TableCell>{crime.count}</TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
                   </CardContent>
                 </Card>
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={12} className="tour-alerts">
                 <Card
                   sx={{
                     boxShadow: 3,
                     borderRadius: 2,
-                    height: emptyCardHeight,
+                    height: '120%',
                   }}
                 >
                   <CardContent>
                     <Typography variant="h6" gutterBottom>
                       Alerts
                     </Typography>
-                    <Button variant="contained" color="primary" onClick={handleOpen}>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={handleOpen}
+                      className="tour-add-alert-button"
+                    >
                       Add Alert
                     </Button>
                     <Box mt={2}>
@@ -111,6 +198,34 @@ const SamplePage = () => {
             </Grid>
           </Grid>
         </Grid>
+      </Box>
+      <Box mt={4} className="tour-posts">
+        <Card
+          sx={{
+            boxShadow: 3,
+            borderRadius: 2,
+            overflowX: 'auto',
+            whiteSpace: 'nowrap',
+            width: '100%', // Cover the entire width of the screen
+            height: '150%',
+          }}
+        >
+          <CardContent style={{ display: 'flex' }}>
+            {posts.map(post => (
+              <Card key={post.id} sx={{ flex: '0 0 auto', minWidth: '300px', marginRight: '16px' }}>
+                <CardContent>
+                  <Typography variant="subtitle1">{post.title}</Typography>
+                  <Typography variant="body2">{post.content}</Typography>
+                </CardContent>
+              </Card>
+            ))}
+          </CardContent>
+        </Card>
+      </Box>
+      <Box display="flex" justifyContent="center" mt={4}>
+        <Button variant="contained" color="primary" onClick={() => setRunTour(true)}>
+          Start Tour
+        </Button>
       </Box>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Add Alert</DialogTitle>
@@ -168,3 +283,4 @@ const SamplePage = () => {
 };
 
 export default SamplePage;
+

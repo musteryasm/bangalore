@@ -10,7 +10,7 @@ import AuthLogin from './auth/AuthLogin';
 const Login2 = () => {
   
   return (
-    <PageContainer title="Login" description="this is Login page">
+    <PageContainer title="Login" description="this is L">
       <Box
         sx={{
           position: 'relative',
@@ -44,7 +44,7 @@ const Login2 = () => {
               <AuthLogin
                 subtext={
                   <Typography variant="subtitle1" textAlign="center" color="textSecondary" mb={1}>
-                    Login Here
+                    Karnataka State Police
                   </Typography>
                 }
                 subtitle={
@@ -53,17 +53,17 @@ const Login2 = () => {
                       <FormControlLabel
                         value="option1"
                         control={<Radio />}
-                        label="Option 1"
+                        label="Constable"
                       />
                       <FormControlLabel
                         value="option2"
                         control={<Radio />}
-                        label="Option 2"
+                        label="Inspector"
                       />
                       <FormControlLabel
                         value="option3"
                         control={<Radio />}
-                        label="Option 3"
+                        label="Superintendent"
                       />
                     </RadioGroup>
                   </Stack>

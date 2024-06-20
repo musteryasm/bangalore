@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "react-joyride": "^2.8.2",
+    "recharts": "^2.12.7"
+  }
+}

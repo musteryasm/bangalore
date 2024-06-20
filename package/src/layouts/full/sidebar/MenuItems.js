@@ -27,7 +27,7 @@ const Menuitems = [
   // },
   {
     id: uniqueId(),
-    title: 'Community',
+    title: 'Beats',
     icon: IconTypography,
     href: '/ui/typography',
   },
