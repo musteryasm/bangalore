@@ -3,7 +3,8 @@ import { Grid, FormControl, InputLabel, Select, Typography, Card, CardContent, T
 import { useTheme } from '@mui/material/styles';
 import DashboardCard from '../../../components/shared/DashboardCard';
 import Chart from 'react-apexcharts';
-import HotspotsMapCard from '../components/Hotspots';  // Assuming HotspotsMapCard is imported from a file
+import CrimeReportForm from '../components/Hotspots';
+import HotspotsMapCard from '../components/Hotspots';
 
 const CrimeStatisticsDashboard = () => {
     const theme = useTheme();
@@ -151,7 +152,8 @@ const CrimeStatisticsDashboard = () => {
                         <Typography variant="h6" gutterBottom>
                             Hotspots Map
                         </Typography>
-                        <HotspotsMapCard />
+                        <HotspotsMapCard/>
+                        {/* <CrimeReportForm/> */}
                     </CardContent>
                 </Card>
             </Grid>

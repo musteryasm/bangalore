@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Grid, Typography, Card, CardContent, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import { PieChart, Pie, Cell, Tooltip, BarChart, Bar, XAxis, YAxis, CartesianGrid, Legend } from 'recharts';
+import HeatmapCard from './heatmap';
 
 // Mock data for districts
 const districts = ['District 1', 'District 2', 'District 3'];
@@ -98,8 +99,7 @@ const Crime = () => {
             </Typography>
             {/* Placeholder for heatmap */}
             <div style={{ width: '100%', height: '300px', backgroundColor: '#e0e0e0' }}>
-              {/* Integrate your heatmap here */}
-              Heatmap Placeholder
+              <HeatmapCard/>
             </div>
           </CardContent>
         </Card>

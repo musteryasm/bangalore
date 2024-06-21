@@ -1,6 +1,7 @@
 import React from 'react';
 import { Typography, Grid, Card, CardContent, Table, TableContainer, TableHead, TableBody, TableRow, TableCell, Paper, Box } from '@mui/material';
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, LineChart, Line, Legend, ComposedChart } from 'recharts';
+import HotspotsMapCard from '../../dashboard/components/Hotspots';
 
 // Mock data for top reported locations
 const topLocations = [
@@ -47,9 +48,9 @@ const Locations = () => {
             <Typography variant="h6" gutterBottom>
               Hotspots Map
             </Typography>
-            {/* Your map component or placeholder */}
+            {/* <HotspotsMapCard/> */}
             <div style={{ height: '300px', backgroundColor: '#f0f0f0', textAlign: 'center', lineHeight: '300px' }}>
-              Map Placeholder
+              <HotspotsMapCard/>
             </div>
           </CardContent>
         </Card>
