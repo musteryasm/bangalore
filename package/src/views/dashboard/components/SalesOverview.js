@@ -18,11 +18,11 @@ const SalesOverview = () => {
     const data = {
         '2023': {
             months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-            crimes: [30, 40, 35, 50, 49, 60, 70, 91, 125, 160, 200, 230]
+            crimes: [30, 40, 35, 50, 45, 60, 90, 15, 60, 25, 90, 45]
         },
         '2024': {
             months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-            crimes: [25, 30, 45, 55, 60, 70, 75, 80, 95, 110, 130, 150]
+            crimes: [25, 30, 35, 40, 45, 80, 55, 20, 15, 90, 45, 12 ]
         }
     };
 

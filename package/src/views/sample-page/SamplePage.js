@@ -1,18 +1,14 @@
-import React, { useState } from 'react';
-import { Grid, Typography, Box, Card, CardContent, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField, Table, TableHead, TableBody, TableRow, TableCell } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import { Grid, Typography, Box, Card, CardContent, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from '@mui/material';
 import PageContainer from 'src/components/container/PageContainer';
 import SalesOverview from '../dashboard/components/SalesOverview';
 import Joyride from 'react-joyride';
 
 const cardContents = [
-  { title: 'Complaints Received', text: '100000' },
-  { title: 'Issues Resolved', text: '15000' },
-  { title: 'Issues Unsolved', text: '25000' },
-  { title: 'Feedbacks Recieved', text: '100000' },
-  // { title: 'Card 5', text: 'This is the content of card 5' },
-  // { title: 'Card 6', text: 'This is the content of card 6' },
-  // { title: 'Card 7', text: 'This is the content of card 7' },
-  // { title: 'Card 8', text: 'This is the content of card 8' },
+  { title: 'Complaints Received', text: '853' },
+  { title: 'Issues Resolved', text: '150' },
+  { title: 'Issues Unsolved', text: '250' },
+  { title: 'Feedbacks Received', text: '102' },
 ];
 
 const emptyCardHeight = 330; // Set the height to match the expected height of the YearlyBreakup and MonthlyEarnings components
@@ -25,6 +21,24 @@ const SamplePage = () => {
   const [alertDateTo, setAlertDateTo] = useState('');
   const [alerts, setAlerts] = useState([]);
   const [runTour, setRunTour] = useState(false);
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    fetchPosts();
+  }, []);
+
+  const fetchPosts = async () => {
+    try {
+      const response = await fetch('http://ksp-dev.ap-south-1.elasticbeanstalk.com/posts');
+      if (!response.ok) {
+        throw new Error('Failed to fetch posts');
+      }
+      const data = await response.json();
+      setPosts(data);
+    } catch (error) {
+      console.error('Error fetching posts:', error);
+    }
+  };
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -65,27 +79,12 @@ const SamplePage = () => {
     },
   ];
 
-  // Sample posts data
-  const posts = [
-    { id: 1, title: 'Post 1', content: 'Content of post 1' },
-    { id: 2, title: 'Post 2', content: 'Content of post 2' },
-    { id: 3, title: 'Post 3', content: 'Content of post 3' },
-    { id: 4, title: 'Post 4', content: 'Content of post 4' },
-    { id: 5, title: 'Post 5', content: 'Content of post 5' },
-    { id: 6, title: 'Post 6', content: 'Content of post 6' },
-    { id: 7, title: 'Post 7', content: 'Content of post 7' },
-    { id: 8, title: 'Post 8', content: 'Content of post 8' },
-    { id: 9, title: 'Post 9', content: 'Content of post 9' },
-    { id: 10, title: 'Post 10', content: 'Content of post 10' },
-  ];
-
-  // Sample crime data for empty cards
-  const crimeData = [
-    { district: 'District A', crime: 'Burglary', count: 150 },
-    { district: 'District B', crime: 'Assault', count: 100 },
-    { district: 'District A', crime: 'Robbery', count: 80 },
-    { district: 'District C', crime: 'Vandalism', count: 50 },
-    { district: 'District B', crime: 'Fraud', count: 30 },
+  const crimeCategories = [
+    { category: 'Theft', count: 120 },
+    { category: 'Assault', count: 80 },
+    { category: 'Vandalism', count: 60 },
+    { category: 'Fraud', count: 45 },
+    { category: 'Burglary', count: 30 },
   ];
 
   return (
@@ -137,31 +136,20 @@ const SamplePage = () => {
                   sx={{
                     boxShadow: 3,
                     borderRadius: 2,
-                    height: emptyCardHeight,
+                    height: '100%', // Fill the entire height of the parent grid item
+                    display: 'flex',
+                    flexDirection: 'column',
                   }}
                 >
                   <CardContent>
                     <Typography variant="h6" gutterBottom>
                       Reports Statistics
                     </Typography>
-                    <Table>
-                      <TableHead>
-                        <TableRow>
-                          <TableCell>District</TableCell>
-                          <TableCell>Crime Type</TableCell>
-                          <TableCell>Count</TableCell>
-                        </TableRow>
-                      </TableHead>
-                      <TableBody>
-                        {crimeData.map((crime, index) => (
-                          <TableRow key={index}>
-                            <TableCell>{crime.district}</TableCell>
-                            <TableCell>{crime.crime}</TableCell>
-                            <TableCell>{crime.count}</TableCell>
-                          </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
+                    {crimeCategories.map((category, index) => (
+                      <Typography key={index} variant="body2" sx={{ marginBottom: 1 }}>
+                        {category.category}: {category.count}
+                      </Typography>
+                    ))}
                   </CardContent>
                 </Card>
               </Grid>
@@ -170,7 +158,7 @@ const SamplePage = () => {
                   sx={{
                     boxShadow: 3,
                     borderRadius: 2,
-                    height: '120%',
+                    height: '100%', // Adjust height as needed
                   }}
                 >
                   <CardContent>
@@ -200,27 +188,23 @@ const SamplePage = () => {
         </Grid>
       </Box>
       <Box mt={4} className="tour-posts">
-        <Card
-          sx={{
-            boxShadow: 3,
-            borderRadius: 2,
-            overflowX: 'auto',
-            whiteSpace: 'nowrap',
-            width: '100%', // Cover the entire width of the screen
-            height: '150%',
-          }}
-        >
-          <CardContent style={{ display: 'flex' }}>
-            {posts.map(post => (
-              <Card key={post.id} sx={{ flex: '0 0 auto', minWidth: '300px', marginRight: '16px' }}>
-                <CardContent>
-                  <Typography variant="subtitle1">{post.title}</Typography>
-                  <Typography variant="body2">{post.content}</Typography>
+        <Grid container spacing={3}>
+          {posts.map((post, index) => (
+            <Grid item xs={12} sm={6} md={4} key={index}>
+              <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+                <img src={post.image} alt={post.description} style={{ objectFit: 'cover', height: 200 }} />
+                <CardContent sx={{ flexGrow: 1 }}>
+                  <Typography gutterBottom variant="h6">
+                    {post.description}
+                  </Typography>
+                  <Typography variant="body2" color="textSecondary">
+                    Created At: {new Date(post.created_at).toLocaleString()}
+                  </Typography>
                 </CardContent>
               </Card>
-            ))}
-          </CardContent>
-        </Card>
+            </Grid>
+          ))}
+        </Grid>
       </Box>
       <Box display="flex" justifyContent="center" mt={4}>
         <Button variant="contained" color="primary" onClick={() => setRunTour(true)}>
@@ -283,4 +267,3 @@ const SamplePage = () => {
 };
 
 export default SamplePage;
-

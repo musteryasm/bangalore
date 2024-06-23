@@ -8,13 +8,16 @@ const CrimePieChart = () => {
     const theme = useTheme();
     const primary = theme.palette.primary.main;
 
-    // Sample data for crimes
+    // Updated crime data according to JSON provided
     const crimeData = [
-        { crime: 'Burglary', count: 150 },
-        { crime: 'Assault', count: 100 },
-        { crime: 'Robbery', count: 80 },
-        { crime: 'Vandalism', count: 50 },
-        { crime: 'Fraud', count: 30 },
+        { crime: 'Of Automobiles - Of Two Wheelers', count: 16416 },
+        { crime: 'Other Roads', count: 11021 },
+        { crime: 'Information Technology Act 2000, 2009', count: 10630 },
+        { crime: 'Public Safety', count: 9025 },
+        { crime: 'CHEATING', count: 8920 },
+        { crime: 'Simple Hurt', count: 8663 },
+        { crime: 'Women', count: 8654 },
+        { crime: 'Man', count: 5962 }
     ];
 
     // Options for ApexCharts pie chart
@@ -28,11 +31,11 @@ const CrimePieChart = () => {
             },
             height: 350,
         },
-        colors: [primary, '#4CAF50', '#FFC107', '#9C27B0', '#2196F3'],
+        colors: [primary, '#4CAF50', '#FFC107', '#9C27B0', '#2196F3', '#FF5722', '#795548', '#607D8B'],
         dataLabels: {
             enabled: true,
             formatter: function (val) {
-                return `${val}%`;
+                return `${val.toFixed(2)}%`;
             },
         },
         legend: {
@@ -47,9 +50,16 @@ const CrimePieChart = () => {
             enabled: true,
             fillSeriesColor: false,
             theme: theme.palette.mode === 'dark' ? 'dark' : 'light',
-            formatter: function (val) {
-                return `${val.seriesIndex !== undefined ? crimeData[val.seriesIndex].crime + ': ' : ''}${val.value}`;
-            },
+            y: {
+                formatter: function (val) {
+                    return val;
+                },
+                title: {
+                    formatter: function (seriesName) {
+                        return seriesName;
+                    }
+                }
+            }
         },
     };
 

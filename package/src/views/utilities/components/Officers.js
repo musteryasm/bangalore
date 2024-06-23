@@ -3,18 +3,18 @@ import { Typography, Grid, Card, CardContent, Table, TableContainer, TableHead, 
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 // Mock data for typography cards
-const ioCount = 120;
-const unitCount = 30;
-const ioOnDuty = 80;
-const activeUnits = 20;
+const ioCount = 453;
+const unitCount = 287;
+const ioOnDuty = 320;
+const activeUnits = 220;
 
 // Mock data for top 5 IO officers and units
 const topOfficers = [
-  { id: 1, name: 'John Doe', casesSolved: 50, responseTime: 8 },
-  { id: 2, name: 'Jane Smith', casesSolved: 45, responseTime: 9 },
-  { id: 3, name: 'Michael Brown', casesSolved: 40, responseTime: 10 },
-  { id: 4, name: 'Emily Johnson', casesSolved: 35, responseTime: 11 },
-  { id: 5, name: 'David Lee', casesSolved: 30, responseTime: 12 },
+  { id: 1, name: 'Anand H Bhagwati', casesSolved: 50, responseTime: 13 },
+  { id: 2, name: 'Sanjeev Baligar', casesSolved: 45, responseTime: 12 },
+  { id: 3, name: 'Girish Balakrishnan', casesSolved: 40, responseTime: 10 },
+  { id: 4, name: 'Nagarjuna Chaitanya', casesSolved: 35, responseTime: 11 },
+  { id: 5, name: 'Y H Walikar', casesSolved: 30, responseTime: 12 },
 ];
 
 const topUnits = [
@@ -27,11 +27,11 @@ const topUnits = [
 
 // Mock data for least performing IO officers and units
 const leastPerformingOfficers = [
-  { id: 1, name: 'Robert Green', casesSolved: 10, responseTime: 20 },
-  { id: 2, name: 'Sophia White', casesSolved: 12, responseTime: 18 },
-  { id: 3, name: 'Daniel Wilson', casesSolved: 15, responseTime: 17 },
-  { id: 4, name: 'Olivia Harris', casesSolved: 18, responseTime: 16 },
-  { id: 5, name: 'James Martinez', casesSolved: 20, responseTime: 15 },
+  { id: 1, name: 'Malika Arjan', casesSolved: 10, responseTime: 20 },
+  { id: 2, name: 'Laxmi Kaant', casesSolved: 12, responseTime: 18 },
+  { id: 3, name: 'Sumannath Swamy', casesSolved: 15, responseTime: 17 },
+  { id: 4, name: 'Ramakrishnan Iyer', casesSolved: 18, responseTime: 16 },
+  { id: 5, name: 'Chandrashekhar Suman', casesSolved: 20, responseTime: 15 },
 ];
 
 const leastPerformingUnits = [
@@ -54,7 +54,24 @@ const responseTimeData = [
   { unit: 'Unit H', responseTime: 14 },
   { unit: 'Unit I', responseTime: 15 },
   { unit: 'Unit J', responseTime: 16 },
+  { unit: 'Unit K', responseTime: 12 },
+  { unit: 'Unit L', responseTime: 7 },
+  { unit: 'Unit M', responseTime: 19 },
+  { unit: 'Unit N', responseTime: 12 },
+  { unit: 'Unit O', responseTime: 13 },
+  { unit: 'Unit P', responseTime: 17 },
+  { unit: 'Unit Q', responseTime: 10 },
+  { unit: 'Unit R', responseTime: 12 },
+  { unit: 'Unit S', responseTime: 15 },
+  { unit: 'Unit T', responseTime: 9 },
+  { unit: 'Unit U', responseTime: 12 },
+  { unit: 'Unit V', responseTime: 19 },
+  { unit: 'Unit W', responseTime: 11 },
+  { unit: 'Unit X', responseTime: 19 },
+  { unit: 'Unit Y', responseTime: 12 },
+  { unit: 'Unit Z', responseTime: 16 },
 ];
+
 
 // Mock data for cases solved by IO officers
 const casesSolvedData = [
@@ -257,7 +274,7 @@ const Officers = () => {
       </Grid>
 
       {/* Bar Chart: Cases Solved by IO Officers */}
-      <Grid item xs={12}>
+      {/* <Grid item xs={12}>
         <Card>
           <CardContent>
             <Typography variant="h6" gutterBottom>
@@ -275,7 +292,7 @@ const Officers = () => {
             </ResponsiveContainer>
           </CardContent>
         </Card>
-      </Grid>
+      </Grid> */}
     </Grid>
   );
 };

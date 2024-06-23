@@ -5,11 +5,11 @@ import HotspotsMapCard from '../../dashboard/components/Hotspots';
 
 // Mock data for top reported locations
 const topLocations = [
-  { id: 1, location: 'Location A', reports: 50, details: 'High theft incidents' },
-  { id: 2, location: 'Location B', reports: 45, details: 'Vandalism cases' },
-  { id: 3, location: 'Location C', reports: 40, details: 'Assaults reported' },
-  { id: 4, location: 'Location D', reports: 35, details: 'Burglary concerns' },
-  { id: 5, location: 'Location E', reports: 30, details: 'Low patrol coverage' },
+  { id: 1, location: 'Bengaluru City', reports: 147436, details: 'High theft incidents' },
+  { id: 2, location: 'Bengaluru Dist', reports: 35080, details: 'Vandalism cases' },
+  { id: 3, location: 'Belagavi Dst', reports: 26742, details: 'Assaults reported' },
+  { id: 4, location: 'Davanagere', reports: 12481, details: 'Burglary concerns' },
+  { id: 5, location: 'Chikkamagaluru', reports: 12295, details: 'Low patrol coverage' },
 ];
 
 // Mock data for patrol frequency
@@ -30,11 +30,9 @@ const incidentsReported = [
 
 // Mock data for predicted vulnerable locations
 const predictedLocations = [
-  { location: 'Location F', prediction: 'High theft incidents' },
-  { location: 'Location G', prediction: 'Potential vandalism cases' },
-  { location: 'Location H', prediction: 'Increased assault reports' },
-  { location: 'Location H', prediction: 'Increased assault reports' },
-  { location: 'Location H', prediction: 'Increased assault reports' },
+  { location: 'Bengaluru City', prediction: '91% Possibility' },
+  { location: 'Belagavi Dist', prediction: '72% Possibility' },
+  { location: 'Hubballi ', prediction: '55% Possibility' },
   
 ];
 
@@ -69,7 +67,7 @@ const Locations = () => {
                   <TableRow>
                     <TableCell>Location</TableCell>
                     <TableCell>Reports</TableCell>
-                    <TableCell>Details</TableCell>
+                    <TableCell>Top Crimes</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -108,7 +106,7 @@ const Locations = () => {
       </Grid>
 
       {/* Total Number of Locations Card */}
-      <Grid item xs={12} md={6}>
+      {/* <Grid item xs={12} md={6}>
         <Card>
           <CardContent>
             <Typography variant="h6">Total Number of Locations</Typography>
@@ -134,10 +132,10 @@ const Locations = () => {
           </CardContent>
         </Card>
         
-      </Grid>
+      </Grid> */}
 
       {/* Patrol Frequency Bar Chart */}
-      <Grid item xs={12} md={6}>
+      {/* <Grid item xs={12} md={6}>
         <Card>
           <CardContent>
             <Typography variant="h6" gutterBottom>
@@ -155,10 +153,10 @@ const Locations = () => {
             </ResponsiveContainer>
           </CardContent>
         </Card>
-      </Grid>
+      </Grid> */}
 
       {/* Incidents Reported Line Chart */}
-      <Grid item xs={12}>
+      {/* <Grid item xs={12}>
         <Card>
           <CardContent>
             <Typography variant="h6" gutterBottom>
@@ -180,7 +178,7 @@ const Locations = () => {
             </ResponsiveContainer>
           </CardContent>
         </Card>
-      </Grid>
+      </Grid> */}
     </Grid>
   );
 };

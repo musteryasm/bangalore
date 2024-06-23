@@ -1,18 +1,98 @@
-import React, { useState } from 'react';
-import { Tabs, Tab, Box, Typography, Card, CardContent, Grid, Select, MenuItem, FormControl, InputLabel, Button } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import {
+  Tabs,
+  Tab,
+  Box,
+  Typography,
+  Card,
+  CardContent,
+  Grid,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  Button
+} from '@mui/material';
 import PageContainer from 'src/components/container/PageContainer';
 import DashboardCard from '../../components/shared/DashboardCard';
 import { Bar, Pie } from 'react-chartjs-2';
-import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement } from 'chart.js';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+  ArcElement
+} from 'chart.js';
 import Joyride from 'react-joyride'; // Import Joyride
-
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement);
+import axios from 'axios'; // Import Axios for HTTP requests
+import MapComponent from './map1';
+import MapComponent1 from './map2';
+// Register chart elements with ChartJS
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+  ArcElement
+);
 
 const Icons = () => {
   const [activeTab, setActiveTab] = useState(0);
   const [gender, setGender] = useState('Men');
   const [offenderGender, setOffenderGender] = useState('Men');
   const [runTour, setRunTour] = useState(false); // State to control tour
+  const [victimYearStats, setVictimYearStats] = useState([]);
+  const [victimYearMonthStats, setVictimYearMonthStats] = useState({});
+  const [victimTopProfessions, setVictimTopProfessions] = useState([]);
+  const [victimTopCastes, setVictimTopCastes] = useState([]);
+  const [accusedGenderStats, setAccusedGenderStats] = useState([]);
+  const [accusedYearStats, setAccusedYearStats] = useState([]);
+  const [accusedYearMonthStats, setAccusedYearMonthStats] = useState({});
+  const [accusedTopDistricts, setAccusedTopDistricts] = useState([]);
+  const [accusedTopNationalities, setAccusedTopNationalities] = useState([]);
+  const [accusedTopProfessions, setAccusedTopProfessions] = useState([]);
+
+  useEffect(() => {
+    fetchVictimStats();
+    fetchAccusedStats();
+  }, []);
+
+  const fetchVictimStats = async () => {
+    try {
+      const response = await axios.get(
+        'http://ksp-dev.ap-south-1.elasticbeanstalk.com/victim/stats/'
+      );
+      const data = response.data;
+      setVictimYearStats(data.year_wise);
+      setVictimYearMonthStats(data.year_month_wise);
+      setVictimTopProfessions(data.top_10_professions);
+      setVictimTopCastes(data.top_15_castes);
+    } catch (error) {
+      console.error('Error fetching victim stats:', error);
+    }
+  };
+
+  const fetchAccusedStats = async () => {
+    try {
+      const response = await axios.get(
+        'http://ksp-dev.ap-south-1.elasticbeanstalk.com/accused/stats/'
+      );
+      const data = response.data;
+      setAccusedGenderStats(data.gender_wise_split);
+      setAccusedYearStats(data.year_wise);
+      setAccusedYearMonthStats(data.year_month_wise);
+      setAccusedTopDistricts(data.top_10_districts);
+      setAccusedTopNationalities(data.top_10_foreign_nationalities);
+      setAccusedTopProfessions(data.top_10_professions);
+    } catch (error) {
+      console.error('Error fetching accused stats:', error);
+    }
+  };
 
   const handleTabChange = (event, newValue) => {
     setActiveTab(newValue);
@@ -27,11 +107,11 @@ const Icons = () => {
   };
 
   const victimBarData = {
-    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+    labels: Object.keys(victimYearMonthStats),
     datasets: [
       {
         label: `Crimes Reported (${gender})`,
-        data: gender === 'Men' ? [65, 59, 80, 81, 56, 55, 40] : [45, 49, 60, 71, 36, 45, 30],
+        data: gender === 'Men' ? Object.values(victimYearMonthStats) : Array(Object.keys(victimYearMonthStats).length).fill(0),
         backgroundColor: 'rgba(75,192,192,0.4)',
         borderColor: 'rgba(75,192,192,1)',
         borderWidth: 1,
@@ -40,11 +120,11 @@ const Icons = () => {
   };
 
   const offenderBarData = {
-    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+    labels: Object.keys(accusedYearMonthStats),
     datasets: [
       {
         label: `Crimes Committed (${offenderGender})`,
-        data: offenderGender === 'Men' ? [75, 69, 90, 91, 66, 65, 50] : [55, 59, 70, 81, 46, 55, 40],
+        data: offenderGender === 'Men' ? Object.values(accusedYearMonthStats) : Array(Object.keys(accusedYearMonthStats).length).fill(0),
         backgroundColor: 'rgba(153,102,255,0.4)',
         borderColor: 'rgba(153,102,255,1)',
         borderWidth: 1,
@@ -53,23 +133,23 @@ const Icons = () => {
   };
 
   const victimPieData = {
-    labels: ['Robbery', 'Assault', 'Theft', 'Burglary'],
+    labels: victimTopProfessions.map((item) => item.Profession),
     datasets: [
       {
-        data: [300, 50, 100, 60],
-        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0'],
-        hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0'],
+        data: victimTopProfessions.map((item) => item.count),
+        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#FF8C00', '#7CFC00', '#BA55D3', '#5F9EA0', '#DAA520', '#CD5C5C'],
+        hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#FF8C00', '#7CFC00', '#BA55D3', '#5F9EA0', '#DAA520', '#CD5C5C'],
       },
     ],
   };
 
   const offenderPieData = {
-    labels: ['Robbery', 'Assault', 'Theft', 'Burglary'],
+    labels: accusedTopProfessions.map((item) => item.Profession),
     datasets: [
       {
-        data: [200, 80, 120, 90],
-        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0'],
-        hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0'],
+        data: accusedTopProfessions.map((item) => item.count),
+        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#FF8C00', '#7CFC00', '#BA55D3', '#5F9EA0', '#DAA520', '#CD5C5C'],
+        hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#FF8C00', '#7CFC00', '#BA55D3', '#5F9EA0', '#DAA520', '#CD5C5C'],
       },
     ],
   };
@@ -156,8 +236,23 @@ const Icons = () => {
                 <Grid item xs={12} md={4}>
                   <Card sx={{ boxShadow: 3, height: '100%' }} className="tour-victim-pie-chart">
                     <CardContent>
-                      <Typography variant="h6">Pie Chart</Typography>
+                      <Typography variant="h6">Top Professions of Victims</Typography>
                       <Pie data={victimPieData} />
+                    </CardContent>
+                  </Card>
+                </Grid>
+                <Grid item xs={12} md={2}>
+                  <Card sx={{ boxShadow: 3, height: '100%' }}>
+                    <CardContent>
+                      <Typography variant="h6">Top Castes of Victims</Typography>
+                      <ul>
+  {victimTopCastes.slice(0, 5).map((item, index) => (
+    <li key={index}>
+      {item.Caste}: {item.count}
+    </li>
+  ))}
+</ul>
+
                     </CardContent>
                   </Card>
                 </Grid>
@@ -165,9 +260,7 @@ const Icons = () => {
                   <Card sx={{ boxShadow: 3 }}>
                     <CardContent>
                       <Typography variant="h6">Choropleth Map</Typography>
-                      <Box sx={{ height: 300, backgroundColor: '#e0e0e0', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                        <Typography variant="body1">Choropleth Map Placeholder</Typography>
-                      </Box>
+                      <MapComponent />
                     </CardContent>
                   </Card>
                 </Grid>
@@ -201,8 +294,22 @@ const Icons = () => {
                 <Grid item xs={12} md={4}>
                   <Card sx={{ boxShadow: 3, height: '100%' }} className="tour-offender-pie-chart">
                     <CardContent>
-                      <Typography variant="h6">Pie Chart</Typography>
+                      <Typography variant="h6">Top Professions of Offenders</Typography>
                       <Pie data={offenderPieData} />
+                    </CardContent>
+                  </Card>
+                </Grid>
+                <Grid item xs={12} md={2}>
+                  <Card sx={{ boxShadow: 3, height: '100%' }}>
+                    <CardContent>
+                      <Typography variant="h6">Top Districts of Offenders</Typography>
+                      <ul>
+                        {accusedTopDistricts.map((item, index) => (
+                          <li key={index}>
+                            {item.District}: {item.count}
+                          </li>
+                        ))}
+                      </ul>
                     </CardContent>
                   </Card>
                 </Grid>
@@ -210,9 +317,7 @@ const Icons = () => {
                   <Card sx={{ boxShadow: 3 }}>
                     <CardContent>
                       <Typography variant="h6">Choropleth Map</Typography>
-                      <Box sx={{ height: 300, backgroundColor: '#e0e0e0', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                        <Typography variant="body1">Choropleth Map Placeholder</Typography>
-                        </Box>
+                      <MapComponent1 />
                     </CardContent>
                   </Card>
                 </Grid>
@@ -221,16 +326,11 @@ const Icons = () => {
           )}
         </Box>
       </DashboardCard>
-
-      {/* Button to start the tour */}
-      <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }}>
-        <Button variant="contained" color="primary" onClick={handleStartTour}>
-          Start Tour
-        </Button>
-      </Box>
+      <Button onClick={handleStartTour} variant="contained" color="primary" sx={{ mt: 2 }}>
+        Start Tour
+      </Button>
     </PageContainer>
   );
 };
 
 export default Icons;
-

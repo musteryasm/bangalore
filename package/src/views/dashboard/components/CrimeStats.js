@@ -6,57 +6,94 @@ import BlankCard from '../../../components/shared/BlankCard';
 import Chart from 'react-apexcharts';
 
 const crimeData = {
-    'District A': [
-        { title: 'Theft', count: 1250, increase: '5%' },
-        { title: 'Assault', count: 850, increase: '8%' },
-        { title: 'Burglary', count: 650, increase: '3%' },
-        { title: 'Gambling', count: 400, increase: '2%' },
-        { title: 'Robbery', count: 300, increase: '4%' },
-        { title: 'Rape', count: 200, increase: '6%' },
-        { title: 'Suicide', count: 150, increase: '1%' },
-        { title: 'Riots', count: 100, increase: '7%' },
+    'Belagavi Division': [
+        { title: 'Theft', count: 3321, increase: '5%' },
+        { title: 'Assault', count: 2635, increase: '8%' },
+        { title: 'Burglary', count: 2018, increase: '3%' },
+        { title: 'Gambling', count: 1323, increase: '2%' },
+        { title: 'Robbery', count: 1006, increase: '4%' },
+        { title: 'Rape', count: 813, increase: '6%' },
+        { title: 'Suicide', count: 723, increase: '1%' },
+        { title: 'Riots', count: 507, increase: '7%' },
     ],
-    'District B': [
-        { title: 'Theft', count: 1150, increase: '4%' },
-        { title: 'Assault', count: 900, increase: '7%' },
-        { title: 'Burglary', count: 700, increase: '5%' },
-        { title: 'Gambling', count: 450, increase: '3%' },
-        { title: 'Robbery', count: 350, increase: '6%' },
-        { title: 'Rape', count: 250, increase: '4%' },
-        { title: 'Suicide', count: 200, increase: '2%' },
-        { title: 'Riots', count: 150, increase: '8%' },
+    'Bengaluru Division': [
+        { title: 'Theft', count: 149532, increase: '4%' },
+        { title: 'Assault', count: 35421, increase: '7%' },
+        { title: 'Burglary', count: 27493, increase: '5%' },
+        { title: 'Gambling', count: 18257, increase: '3%' },
+        { title: 'Robbery', count: 14102, increase: '6%' },
+        { title: 'Rape', count: 10123, increase: '4%' },
+        { title: 'Suicide', count: 9284, increase: '2%' },
+        { title: 'Riots', count: 6093, increase: '8%' },
     ],
-    'District C': [
-        { title: 'Theft', count: 1350, increase: '6%' },
-        { title: 'Assault', count: 800, increase: '9%' },
-        { title: 'Burglary', count: 600, increase: '2%' },
-        { title: 'Gambling', count: 500, increase: '1%' },
-        { title: 'Robbery', count: 400, increase: '5%' },
-        { title: 'Rape', count: 300, increase: '7%' },
-        { title: 'Suicide', count: 250, increase: '3%' },
-        { title: 'Riots', count: 200, increase: '9%' },
+    'Kalaburagi Division': [
+        { title: 'Theft', count: 27345, increase: '6%' },
+        { title: 'Assault', count: 16784, increase: '9%' },
+        { title: 'Burglary', count: 12291, increase: '2%' },
+        { title: 'Gambling', count: 10234, increase: '1%' },
+        { title: 'Robbery', count: 8189, increase: '5%' },
+        { title: 'Rape', count: 6075, increase: '7%' },
+        { title: 'Suicide', count: 5167, increase: '3%' },
+        { title: 'Riots', count: 4022, increase: '9%' },
+    ],
+    'Mysuru Division': [
+        { title: 'Theft', count: 15129, increase: '7%' },
+        { title: 'Assault', count: 10671, increase: '8%' },
+        { title: 'Burglary', count: 8236, increase: '4%' },
+        { title: 'Gambling', count: 6224, increase: '2%' },
+        { title: 'Robbery', count: 5123, increase: '5%' },
+        { title: 'Rape', count: 3567, increase: '6%' },
+        { title: 'Suicide', count: 3089, increase: '4%' },
+        { title: 'Riots', count: 2546, increase: '8%' },
     ],
 };
 
+
 const dayOfWeekData = {
-    labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
-    series: [30, 25, 35, 40, 45, 50, 55]
+    'Belagavi Division': {
+        labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+        series: [20, 15, 25, 30, 35, 40, 45]
+    },
+    'Bengaluru Division': {
+        labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+        series: [30, 25, 35, 40, 45, 50, 55]
+    },
+    'Kalaburagi Division': {
+        labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+        series: [25, 20, 30, 35, 40, 45, 50]
+    },
+    'Mysuru Division': {
+        labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+        series: [35, 30, 40, 45, 50, 55, 60]
+    }
 };
 
 const timeOfDayData = {
-    labels: ['Morning', 'Afternoon', 'Evening', 'Night'],
-    series: [20, 40, 35, 50]
+    'Belagavi Division': {
+        labels: ['Morning', 'Afternoon', 'Evening', 'Night'],
+        series: [15, 25, 30, 35]
+    },
+    'Bengaluru Division': {
+        labels: ['Morning', 'Afternoon', 'Evening', 'Night'],
+        series: [20, 40, 35, 50]
+    },
+    'Kalaburagi Division': {
+        labels: ['Morning', 'Afternoon', 'Evening', 'Night'],
+        series: [25, 35, 40, 45]
+    },
+    'Mysuru Division': {
+        labels: ['Morning', 'Afternoon', 'Evening', 'Night'],
+        series: [30, 40, 45, 55]
+    }
 };
 
-const crimeTypeOptions = ['Theft', 'Assault', 'Burglary', 'Gambling', 'Robbery', 'Rape', 'Suicide', 'Riots'];
-
-const districtOptions = ['District A', 'District B', 'District C'];
+const divisionOptions = ['Belagavi Division', 'Bengaluru Division', 'Kalaburagi Division', 'Mysuru Division'];
 
 const CrimeStatsDashboard = () => {
     const theme = useTheme();
     const primary = theme.palette.primary.main;
 
-    const [district, setDistrict] = useState('District A');
+    const [division, setDivision] = useState('Belagavi Division');
     const [crimeType, setCrimeType] = useState('Theft');
 
     const options = {
@@ -105,11 +142,11 @@ const CrimeStatsDashboard = () => {
     const seriesOptions = {
         dayOfWeek: {
             name: 'Incidents by Day of Week',
-            data: dayOfWeekData.series,
+            data: dayOfWeekData[division].series,
         },
         timeOfDay: {
             name: 'Incidents by Time of Day',
-            data: timeOfDayData.series,
+            data: timeOfDayData[division].series,
         }
     };
 
@@ -117,28 +154,28 @@ const CrimeStatsDashboard = () => {
         setCrimeType(event.target.value);
     };
 
-    const handleDistrictChange = (event) => {
-        setDistrict(event.target.value);
+    const handleDivisionChange = (event) => {
+        setDivision(event.target.value);
     };
 
     return (
         <DashboardCard title="Crime Statistics">
             <Select
-                labelId="district-dd"
-                id="district-dd"
-                value={district}
-                onChange={handleDistrictChange}
+                labelId="division-dd"
+                id="division-dd"
+                value={division}
+                onChange={handleDivisionChange}
                 size="small"
                 fullWidth
                 style={{ marginBottom: theme.spacing(3) }}
             >
-                {districtOptions.map((option) => (
+                {divisionOptions.map((option) => (
                     <MenuItem key={option} value={option}>{option}</MenuItem>
                 ))}
             </Select>
 
             <Grid container spacing={3}>
-                {crimeData[district].map((crime, index) => (
+                {crimeData[division].map((crime, index) => (
                     <Grid item sm={12} md={4} lg={3} key={index}>
                         <BlankCard>
                             <CardContent sx={{ p: 3, pt: 2 }}>
@@ -162,7 +199,7 @@ const CrimeStatsDashboard = () => {
                         fullWidth
                         style={{ marginBottom: theme.spacing(2) }}
                     >
-                        {crimeTypeOptions.map((option) => (
+                        {['Theft', 'Assault', 'Burglary', 'Gambling', 'Robbery', 'Rape', 'Suicide', 'Riots'].map((option) => (
                             <MenuItem key={option} value={option}>{option}</MenuItem>
                         ))}
                     </Select>
@@ -175,17 +212,15 @@ const CrimeStatsDashboard = () => {
                 </Grid>
                 <Grid item xs={12} md={6}>
                     <Select
-                        labelId="crime-type-dd-2"
-                        id="crime-type-dd-2"
-                        value={crimeType}
-                        onChange={handleCrimeTypeChange}
+                                                labelId="time-of-day-dd"
+                        id="time-of-day-dd"
+                        value="Time of Day"
                         size="small"
                         fullWidth
                         style={{ marginBottom: theme.spacing(2) }}
+                        disabled
                     >
-                        {crimeTypeOptions.map((option) => (
-                            <MenuItem key={option} value={option}>{option}</MenuItem>
-                        ))}
+                        <MenuItem value="Time of Day">Time of Day</MenuItem>
                     </Select>
                     <Chart
                         options={options}
@@ -200,3 +235,4 @@ const CrimeStatsDashboard = () => {
 };
 
 export default CrimeStatsDashboard;
+
